@@ -6,7 +6,7 @@
 /*   By: ltourbe <ltourbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 17:38:15 by ltourbe           #+#    #+#             */
-/*   Updated: 2025/12/19 11:30:40 by ltourbe          ###   ########.fr       */
+/*   Updated: 2025/12/19 14:05:41 by ltourbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ int	main(int ac, char **av, char *env[])
 	pid1 = fork();
 	if (pid1 < 0)
 		return (2);
+	pid2 = fork();
+	if (pid2 < 0)
+		return (3);
 	if (pid1 == 0)
 	{
 		dup2(fd[1], STDOUT_FILENO);
@@ -36,9 +39,6 @@ int	main(int ac, char **av, char *env[])
 		close(fd[1]);
 		execve("/usr/bin/cat", cat_args, env);
 	}
-	pid2 = fork();
-	if (pid2 < 0)
-		return (3);
 	if (pid2 == 0)
 	{
 		outfile = open(av[ac - 1], O_WRONLY | O_CREAT, 0777);
